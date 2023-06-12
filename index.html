@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/ikona.png" type="image/x-icon">
+    <title>Društvena igra</title>
+</head>
+<body>
+    <header>
+        <img id="logo" src="img/logo.png" alt="ELPROS">
+        <h1>Kombo</h1>
+        <ul>
+            <li><a href="index.html">Igra</a></li>
+            <li><a href="pravila.html">Pravila</a></li>
+        </ul>
+    </header>
+    <main>
+        <div id="okvir">
+            <div class="cube">
+                <div class="face top"><span class="dot1"></span></div>
+                <div class="face left"><span class="dot2"></span><span class="dot3"></span></div>
+                <div class="face front"><span class="dot4"></span><span class="dot5"></span><span class="dot6"></span></div>
+                <div class="face back"><span class="dot7"></span><span class="dot8"></span><span class="dot9"></span><span class="dot10"></span></div>
+                <div class="face right"><span class="dot11"></span><span class="dot12"></span><span class="dot13"></span><span class="dot14"></span><span class="dot15"></span></div>
+                <div class="face bottom"><span class="dot16"></span><span class="dot17"></span><span class="dot18"></span><span class="dot19"></span><span class="dot20"></span><span class="dot21"></span></div>
+            </div>
+            <button id="kocka" onclick="FunkcijaCrveni()">Igrač 1</button>
+            <div class="cube1">
+                <div class="face1 top"><span class="dot1"></span></div>
+                <div class="face1 left"><span class="dot2"></span><span class="dot3"></span></div>
+                <div class="face1 front"><span class="dot4"></span><span class="dot5"></span><span class="dot6"></span></div>
+                <div class="face1 back"><span class="dot7"></span><span class="dot8"></span><span class="dot9"></span><span class="dot10"></span></div>
+                <div class="face1 right"><span class="dot11"></span><span class="dot12"></span><span class="dot13"></span><span class="dot14"></span><span class="dot15"></span></div>
+                <div class="face1 bottom"><span class="dot16"></span><span class="dot17"></span><span class="dot18"></span><span class="dot19"></span><span class="dot20"></span><span class="dot21"></span></div>
+            </div>
+            <button id="kocka1" onclick="FunkcijaPlavi()">Igrač 2</button>
+        </div>
+        <div id="igra">
+            <div>
+                <span class="ploc" id="ploc1"></span><span class="ploc" id="ploc2"></span><span class="ploc" id="ploc3"></span><span class="ploc" id="ploc4"></span><span class="ploc" id="ploc5"></span><span class="ploc" id="ploc6"></span><span class="ploc" id="ploc7"></span><span class="ploc" id="ploc8"></span><span class="ploc" id="ploc9"></span><span class="ploc" id="ploc10"></span><span class="ploc" id="ploc11"></span><span class="ploc" id="ploc12"></span><span class="ploc" id="ploc13"></span><span class="ploc" id="ploc14"></span><span class="ploc" id="ploc15"></span><span class="ploc" id="ploc16"></span><span class="ploc" id="ploc17"></span><span class="ploc" id="ploc18"></span><span class="ploc" id="ploc19"></span><span class="ploc" id="ploc20"></span><span class="ploc" id="ploc21">FINISH</span>
+            </div>
+            <img id="crveni" src="img/red1.png" alt="">
+            <img id="plavi" src="img/blue1.png" alt="">
+        </div>
+    </main>
+    <footer>
+        &copy; Matija Blažević & Lovro Gladić
+    </footer>
+    <script>
+        let indeksi = [0, 0];
+        let crveni = document.getElementById("crveni");
+        let plavi = document.getElementById("plavi");
+        var randnumberC, randnumberP;
+        const duration = '4s';
+        function getTop(tempid) {
+            var offsets = document.getElementById(tempid).getBoundingClientRect();
+            var top = offsets.top;
+            return top;
+        }
+        function getLeft(tempid) {
+            var offsets = document.getElementById(tempid).getBoundingClientRect();
+            var left = offsets.left;
+            return left;
+        }
+        function FunkcijaCrveni() {
+            const element = document.getElementsByClassName("cube");
+            const startButton = document.getElementById("kocka");
+            randnumberC = Math.floor(Math.random() * 6 + 1);
+            let tempC = randnumberC;
+            do{
+                randnumberC = Math.floor(Math.random() * 6 + 1);
+            }while(randnumberC != tempC);
+            startButton.addEventListener("click", function() {
+            for (let i = 0; i < element.length; i++) {
+                element[i].style.animationPlayState = "initial";
+            }
+            }); 
+            if (indeksi[0] + randnumberC <= 21){
+                indeksi[0] += randnumberC;
+            }
+            tempid = "ploc" + indeksi[0].toString();
+            let leftC;
+            let topC;
+            if (indeksi[0]<=6){
+                topC = 192 - 180;
+                leftC = getLeft(tempid) - 38;
+            }
+            else if(indeksi[0]==7){
+                topC = 250- 150;
+                leftC = getLeft(tempid) - 38;
+            }
+            else if(indeksi[0]<=13){
+                topC = 345- 140;
+                leftC = getLeft(tempid) - 38;
+            }
+            else if (indeksi[0]==14){
+                topC = 441- 150;
+                leftC = getLeft(tempid) - 38;
+            }
+            else if(indeksi[0]>=14){
+                topC = 538- 140;
+                leftC = getLeft(tempid) - 38;
+            }
+            crveni.style.transition = `transform ${duration} ease`;
+            crveni.style.transform = `translate(${leftC}px, ${topC}px)`;
+            switch (randnumberC){
+                case 1:
+                    element[0].style.animationName = "turn";
+                    break;
+                case 2:
+                    element[0].style.animationName = "turn2";
+                    break;
+                case 3:
+                    element[0].style.animationName = "turn3";
+                    break;
+                case 4:
+                    element[0].style.animationName = "turn4";
+                    break;
+                case 5:
+                    element[0].style.animationName = "turn5";
+                    break;
+                case 6:
+                    element[0].style.animationName = "turn6";
+                    break;
+            }
+            setTimeout(function(){
+                if (indeksi[0]==21){
+                alert("Čestitamo, pobjedili ste!!!")
+            }},4000)
+            
+        }
+        function FunkcijaPlavi() {
+            const element = document.getElementsByClassName("cube1");
+            const startButton = document.getElementById("kocka1");
+            randnumberP =  Math.floor(Math.random() * 6 + 1);
+            let tempP = randnumberP;
+            do{
+                randnumberP = Math.floor(Math.random() * 6 + 1);
+            }while(randnumberP != tempP);
+            startButton.addEventListener("click", function() {
+            for (let i = 0; i < element.length; i++) {
+                element[i].style.animationPlayState = "initial";
+            }
+            }); 
+            if (indeksi[1] + randnumberP <= 21) {
+                indeksi[1] += randnumberP;
+            }
+            tempid = "ploc" + indeksi[1].toString();
+            let left;
+            let top;
+            if (indeksi[1]<=6){
+                top = 192 - 180;
+                left = getLeft(tempid) - 140;
+            }
+            else if(indeksi[1]==7){
+                top = 250- 150;
+                left = getLeft(tempid) - 140;
+            }
+            else if(indeksi[1]<=13){
+                top = 345- 140;
+                left = getLeft(tempid) - 140;
+            }
+            else if (indeksi[1]==14){
+                top = 441- 150;
+                left = getLeft(tempid) - 140;
+            }
+            else if(indeksi[1]>=14){
+                top = 538- 140;
+                left = getLeft(tempid) - 140;
+            }
+            plavi.style.transition = `transform ${duration} ease`;
+            plavi.style.transform = `translate(${left}px, ${top}px)`;
+            switch (randnumberP){
+                case 1:
+                    element[0].style.animationName = "turn";
+                    break;
+                case 2:
+                    element[0].style.animationName = "turn2";
+                    break;
+                case 3:
+                    element[0].style.animationName = "turn3";
+                    break;
+                case 4:
+                    element[0].style.animationName = "turn4";
+                    break;
+                case 5:
+                    element[0].style.animationName = "turn5";
+                    break;
+                case 6:
+                    element[0].style.animationName = "turn6";
+                    break;
+            }
+            setTimeout(function(){
+                if (indeksi[1]==21){
+                alert("Čestitamo, pobjedili ste!!!")
+            }},4000)
+        }
+    </script>
+</body>
+</html>
